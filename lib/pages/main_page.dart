@@ -61,7 +61,10 @@ class _MainPageState extends State<MainPage> {
               title: Text(item.name),
               subtitle: Text(item.price.toString()),
               leading: IconButton(
-                  onPressed: () {}, icon: const Icon(Icons.delete_rounded)),
+                  onPressed: () async {
+                    await deleteProduct(item.id);
+                  },
+                  icon: const Icon(Icons.delete_rounded)),
             );
           },
         ),

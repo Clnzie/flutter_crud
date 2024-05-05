@@ -13,13 +13,15 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
   TextEditingController nameProductController = TextEditingController();
   ApiService apiService = ApiService();
 
-  // product() {
-  //   setState(() {
+  // product() async {
+  //   try {
   //     Navigator.pop(context);
-  //     var poduct = apiService.createProduct(nameProductController.text,
+  //     var poduct = await apiService.createProduct(nameProductController.text,
   //         int.tryParse(priceProductController.text) ?? 0);
-  //     print(poduct);
-  //   });
+  //     print("asdas $poduct");
+  //   } catch (e) {
+  //     print("gagal gagal $e");
+  //   }
   // }
 
   @override
@@ -70,11 +72,14 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
             padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
             child: ElevatedButton(
               onPressed: () async {
-                Navigator.pop(context);
-                var product = await apiService.createProduct(
-                    nameProductController.text,
-                    int.tryParse(priceProductController.text) ?? 0);
-                print(product);
+                try {
+                  var poduct = await apiService.createProduct(
+                      nameProductController.text,
+                      int.tryParse(priceProductController.text) ?? 0);
+                  print("asdas $poduct");
+                } catch (e) {
+                  print("gagal gagal $e");
+                }
               },
               child: const Text("Ditekan"),
             ),

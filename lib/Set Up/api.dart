@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 class ApiService {
   Future<List<Product>> getAllProduct() async {
     Uri url = Uri.parse(
-        "https://rest-api-mongoexpress.vercel.app/api/v1/products?page=3");
+        "https://rest-api-mongoexpress.vercel.app/api/v1/products/?page=3");
 
     http.Response response = await http.get(url);
     if (response.statusCode == 200) {
@@ -23,18 +23,22 @@ class ApiService {
   }
 
   Future createProduct(String name, int price) async {
-    Uri url =
-        Uri.parse("https://rest-api-mongoexpress.vercel.app/api/v1/products");
+    try {
+      final Map<String, dynamic> body = {"name": name, "price": price};
+      Uri url = Uri.parse(
+          'https://rest-api-mongoexpress.vercel.app/api/v1/products/');
 
-    http.Response response = await http.post(url,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({
-          'name': name,
-          'price': price,
-        }));
+      http.Response response = await http.post(url,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: json.encode(body));
 
-    return jsonDecode(response.body);
+      var result = jsonDecode(response.body);
+
+      return result;
+    } catch (e) {
+      print("Error making post request $e ");
+    }
   }
 }
