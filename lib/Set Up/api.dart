@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 class ApiService {
   Future<List<Product>> getAllProduct() async {
     Uri url = Uri.parse(
-        "https://rest-api-mongoexpress.vercel.app/api/v1/products/?page=3");
+        "https://rest-api-mongoexpress.vercel.app/api/v1/products/?page=2");
 
     http.Response response = await http.get(url);
     if (response.statusCode == 200) {
@@ -39,6 +39,25 @@ class ApiService {
       return result;
     } catch (e) {
       print("Error making post request $e ");
+    }
+  }
+
+  Future deleteProduct(String slug) async {
+    try {
+      Uri url = Uri.parse(
+          "https://rest-api-mongoexpress.vercel.app/api/v1/products/delete/$slug");
+
+      http.Response response = await http.delete(url, headers: {
+        'Content-Type': 'application/json',
+      });
+
+      if (response.statusCode == 200) {
+        print("sukses delete");
+      } else {
+        throw Exception("Failed to delete Product");
+      }
+    } catch (e) {
+      print("Error deleting Product $e");
     }
   }
 }

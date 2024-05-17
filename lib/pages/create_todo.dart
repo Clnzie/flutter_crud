@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/Set%20Up/api.dart';
+import 'package:flutter_crud/pages/main_page.dart';
 
 class CreateTodoPage extends StatefulWidget {
   const CreateTodoPage({super.key});
@@ -9,16 +10,28 @@ class CreateTodoPage extends StatefulWidget {
 }
 
 class _CreateTodoPageState extends State<CreateTodoPage> {
+  final formKey = GlobalKey<FormState>();
   TextEditingController priceProductController = TextEditingController();
   TextEditingController nameProductController = TextEditingController();
   ApiService apiService = ApiService();
 
-  // product() async {
+  // Future _addProduct() async {
   //   try {
-  //     Navigator.pop(context);
+  //     Navigator.pushReplacement(
+  //         context,
+  //         MaterialPageRoute(
+  //           builder: (context) => const MainPage(),
+  //         ));
+
   //     var poduct = await apiService.createProduct(nameProductController.text,
   //         int.tryParse(priceProductController.text) ?? 0);
   //     print("asdas $poduct");
+
+  //     if (poduct) {
+  //       return true;
+  //     }
+
+  //     return false;
   //   } catch (e) {
   //     print("gagal gagal $e");
   //   }
@@ -73,9 +86,16 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
             child: ElevatedButton(
               onPressed: () async {
                 try {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MainPage(),
+                      ));
+
                   var poduct = await apiService.createProduct(
                       nameProductController.text,
                       int.tryParse(priceProductController.text) ?? 0);
+
                   print("asdas $poduct");
                 } catch (e) {
                   print("gagal gagal $e");
@@ -89,3 +109,18 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
     );
   }
 }
+
+
+// if (formKey.currentState!.validate()) {
+//                     _addProduct().then((value) {
+//                       if (value) {
+//                         final snackBar = SnackBar(
+//                             content: const Text('Product berhasil disimpan'));
+//                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
+//                       } else {
+//                         final snackBar = SnackBar(
+//                             content: const Text('Product gagal disimpan'));
+//                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
+//                       }
+//                     });
+//                   }
