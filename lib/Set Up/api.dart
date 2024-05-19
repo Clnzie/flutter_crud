@@ -53,11 +53,29 @@ class ApiService {
 
       if (response.statusCode == 200) {
         print("sukses delete");
+        // return Product.empty();
       } else {
         throw Exception("Failed to delete Product");
       }
     } catch (e) {
       print("Error deleting Product $e");
+    }
+  }
+
+  Future updateProduct(String slug, name, price) async {
+    try {
+      final Map<String, dynamic> body = {"name": name, "price": price};
+      Uri url = Uri.parse(
+          "https://rest-api-mongoexpress.vercel.app/api/v1/products/update/$slug");
+      http.Response response = await http.put(url,
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode(body));
+
+      var result = jsonDecode(response.body);
+
+      return result;
+    } catch (e) {
+      print("Error update Product");
     }
   }
 }

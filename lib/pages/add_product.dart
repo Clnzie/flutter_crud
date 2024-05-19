@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/Set%20Up/api.dart';
-import 'package:flutter_crud/pages/main_page.dart';
+import 'package:flutter_crud/pages/view_product.dart';
 
-class CreateTodoPage extends StatefulWidget {
-  const CreateTodoPage({super.key});
+class AddProduct extends StatefulWidget {
+  const AddProduct({super.key});
 
   @override
-  State<CreateTodoPage> createState() => _CreateTodoPageState();
+  State<AddProduct> createState() => _AddProductState();
 }
 
-class _CreateTodoPageState extends State<CreateTodoPage> {
+class _AddProductState extends State<AddProduct> {
   final formKey = GlobalKey<FormState>();
   TextEditingController priceProductController = TextEditingController();
   TextEditingController nameProductController = TextEditingController();
@@ -89,7 +89,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const MainPage(),
+                        builder: (context) => const ViewProduct(),
                       ));
 
                   var poduct = await apiService.createProduct(

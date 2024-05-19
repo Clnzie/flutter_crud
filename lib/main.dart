@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_crud/example/asd.dart';
 import 'package:flutter_crud/pages/homepage.dart';
-import 'package:flutter_crud/pages/main_page.dart';
+import 'package:flutter_crud/pages/view_product.dart';
 
 void main() {
   runApp(const MyApp());

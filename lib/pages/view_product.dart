@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/Set%20Up/api.dart';
 import 'package:flutter_crud/Set%20Up/model_api.dart';
-import 'package:flutter_crud/pages/create_todo.dart';
+import 'package:flutter_crud/pages/add_product.dart';
 import 'package:flutter_crud/pages/homepage.dart';
+import 'package:flutter_crud/pages/update_product.dart';
 
-class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+class ViewProduct extends StatefulWidget {
+  const ViewProduct({super.key});
 
   @override
-  State<MainPage> createState() => _MainPageState();
+  State<ViewProduct> createState() => _ViewProductState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _ViewProductState extends State<ViewProduct> {
   List<Product> _list = [];
   ApiService apiService = ApiService();
   bool isLoading = false;
-
   getData() async {
     _list = await apiService.getAllProduct();
     print(_list);
@@ -58,8 +58,8 @@ class _MainPageState extends State<MainPage> {
                             builder: (context) => const HomePage(),
                           ));
                     },
-                    icon: Icon(Icons.keyboard_backspace_rounded)),
-                Text(
+                    icon: const Icon(Icons.keyboard_backspace_rounded)),
+                const Text(
                   "Todo - List",
                   style: TextStyle(
                     fontSize: 14,
@@ -71,48 +71,55 @@ class _MainPageState extends State<MainPage> {
           ),
         ),
         body: ListView.builder(
-          physics: const AlwaysScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: _list.length,
-          itemBuilder: (context, index) {
-            var item = _list[index];
-            return ListTile(
-              title: Text(item.name),
-              subtitle: Text(item.price.toString()),
-              leading: IconButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: Text("Delete Product"),
-                        content: Text("Are you sure delete this product?"),
-                        actions: [
-                          ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text("No")),
-                          ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                                deleteData(item.slug);
-                                getData();
-                              },
-                              child: Text("Yes"))
-                        ],
-                      ),
-                    );
-                  },
-                  icon: const Icon(Icons.delete_rounded)),
-            );
-          },
-        ),
+            physics: const AlwaysScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: _list.length,
+            itemBuilder: (context, index) {
+              var item = _list[index];
+              return ListTile(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UpdateProduct(slug: item.slug),
+                      ));
+                },
+                title: Text(item.name),
+                subtitle: Text(item.price.toString()),
+                leading: IconButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text("Delete Product"),
+                          content:
+                              const Text("Are you sure delete this product?"),
+                          actions: [
+                            ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text("No")),
+                            ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  deleteData(item.slug);
+                                  getData();
+                                },
+                                child: const Text("Yes"))
+                          ],
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.delete_rounded)),
+              );
+            }),
         floatingActionButton: FloatingActionButton.extended(
             onPressed: () async {
               await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const CreateTodoPage(),
+                    builder: (context) => const AddProduct(),
                   ));
               getData();
             },
