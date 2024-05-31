@@ -22,11 +22,13 @@ class _UpdateProductState extends State<UpdateProduct> {
       var name = nameUpdateController.text;
       var price = int.tryParse(priceUpdateController.text) ?? 0;
       var response = await apiService.updateProduct(widget.slug, name, price);
+      nameUpdateController.clear();
+      priceUpdateController.clear();
       print(response);
 
-      setState(() {
-        _response = response;
-      });
+      // setState(() {
+      //   _response = response;
+      // });
     } catch (e) {
       print("error update product $e");
     }

@@ -77,12 +77,13 @@ class _ViewProductState extends State<ViewProduct> {
             itemBuilder: (context, index) {
               var item = _list[index];
               return ListTile(
-                onTap: () {
-                  Navigator.push(
+                onTap: () async {
+                  await Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => UpdateProduct(slug: item.slug),
                       ));
+                  getData();
                 },
                 title: Text(item.name),
                 subtitle: Text(item.price.toString()),

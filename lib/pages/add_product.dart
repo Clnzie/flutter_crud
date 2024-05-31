@@ -96,6 +96,9 @@ class _AddProductState extends State<AddProduct> {
                       nameProductController.text,
                       int.tryParse(priceProductController.text) ?? 0);
 
+                  nameProductController.clear();
+                  priceProductController.clear();
+
                   print("asdas $poduct");
                 } catch (e) {
                   print("gagal gagal $e");
